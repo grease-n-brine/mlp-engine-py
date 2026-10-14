@@ -10,5 +10,10 @@ class MLP:
         for i in range(len(layer) - 1):
             self.weights.append(np.random.randn(layer[i], layer[i + 1]))
             self.biases.append(np.random.randn(layer[i + 1]))
-        
+
+    def _relu(self, x):
+        return np.maximum(0, x)
+
+    def _relu_derivative(self, x):
+        return np.where(x > 0, 1, 0)
         
