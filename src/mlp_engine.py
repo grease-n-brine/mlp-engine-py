@@ -6,5 +6,9 @@ class MLP:
         self.learning_rate = learning_rate
         self.weights = []
         self.biases = []
+
+        for i in range(len(layer) - 1):
+            self.weights.append(np.random.randn(layer[i], layer[i + 1]))
+            self.biases.append(np.random.randn(layer[i + 1]))
         
         
