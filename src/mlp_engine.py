@@ -16,4 +16,13 @@ class MLP:
 
     def _relu_derivative(self, x):
         return np.where(x > 0, 1, 0)
+
+    def forward(self, x):
+        self.activations = [x]
+        self.zs = []
+
+        for i in range(len(self.weights)):
+            z = np.dot(self.activations[-1], self.weights[i]) + self.biases[i]
+            self.zs.append(z)
+            
         
