@@ -33,4 +33,15 @@ class MLP:
             self.activations.append(activation)
 
         return self.activations[-1]
+
+    def backward(self, X, y, output):
+        m = X.shape[0]
+        err = output - y
+
+        for i in range(len(self.weights) - 1, -1, -1):
+            if i == len(self.weights) - 1:
+                delta = err
+            else:
+                delta = np.dot(delta, self.weights[i + 1].T) * self._relu_derivative(self.zs[i])
+
         
