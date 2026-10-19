@@ -24,5 +24,11 @@ class MLP:
         for i in range(len(self.weights)):
             z = np.dot(self.activations[-1], self.weights[i]) + self.biases[i]
             self.zs.append(z)
-            
+
+            if i == len(self.weights) - 1:
+                activation = z  # No activation function for the output layer
+            else:
+                activation = self._relu(z)
+                
+            self.activations.append(activation)
         
