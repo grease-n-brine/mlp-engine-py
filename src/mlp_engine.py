@@ -29,6 +29,8 @@ class MLP:
                 activation = z  # No activation function for the output layer
             else:
                 activation = self._relu(z)
-                
+
             self.activations.append(activation)
+
+        return self.activations[-1]
         
