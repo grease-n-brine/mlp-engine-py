@@ -44,4 +44,10 @@ class MLP:
             else:
                 delta = np.dot(delta, self.weights[i + 1].T) * self._relu_derivative(self.zs[i])
 
-        
+            dw = np.dot(self.activations[i].T, delta) / m
+            db = np.sum(delta, axis=0) / m
+
+            self.weights[i] -= self.learning_rate * dw
+            self.biases[i] -= self.learning_rate * db
+
+        return err
