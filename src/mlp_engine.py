@@ -51,3 +51,10 @@ class MLP:
             self.biases[i] -= self.learning_rate * db
 
         return err
+
+    def train(self, X, y, epochs):
+        for epoch in range(epochs):
+            output = self.forward(X)
+            err = self.backward(X, y, output)
+            loss = np.mean(err ** 2)
+            print(f"Epoch {epoch + 1}/{epochs}, Loss: {loss}")
