@@ -24,5 +24,37 @@ class MLP:
         for i in range(len(self.weights)):
             z = np.dot(self.activations[-1], self.weights[i]) + self.biases[i]
             self.zs.append(z)
-            
-        
+
+            if i == len(self.weights) - 1:
+                activation = z  # No activation function for the output layer
+            else:
+                activation = self._relu(z)
+
+            self.activations.append(activation)
+
+        return self.activations[-1]
+
+    def backward(self, X, y, output):
+        m = X.shape[0]
+        err = output - y
+
+        for i in range(len(self.weights) - 1, -1, -1):
+            if i == len(self.weights) - 1:
+                delta = err
+            else:
+                delta = np.dot(delta, self.weights[i + 1].T) * self._relu_derivative(self.zs[i])
+
+            dw = np.dot(self.activations[i].T, delta) / m
+            db = np.sum(delta, axis=0) / m
+
+            self.weights[i] -= self.learning_rate * dw
+            self.biases[i] -= self.learning_rate * db
+
+        return err
+
+    def train(self, X, y, epochs):
+        for epoch in range(epochs):
+            output = self.forward(X)
+            err = self.backward(X, y, output)
+            loss = np.mean(err ** 2)
+            print(f"Epoch {epoch + 1}/{epochs}, Loss: {loss}")
